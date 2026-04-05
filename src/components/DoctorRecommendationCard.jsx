@@ -86,16 +86,16 @@ export default function DoctorRecommendationCard({
               width: 36, height: 36, borderRadius: 10, flexShrink: 0,
               background: colors.accent, display: 'flex',
               alignItems: 'center', justifyContent: 'center',
-              fontSize: '1rem', color: 'white',
+              fontSize: '1rem', color: 'var(--text-muted)',
             }}
           >
             🔄
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#1e293b' }}>
+            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text)' }}>
               Doctor Switch Recommended
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: 1 }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: 1 }}>
               {urgency === 'high' ? '⚠️ Current doctor is busy. You may experience a long wait.' : '🕐 Moderate wait detected — a faster option is available.'}
             </div>
           </div>
@@ -126,7 +126,7 @@ export default function DoctorRecommendationCard({
         {/* Recommended Doctor card */}
         <div
           style={{
-            background: 'white', borderRadius: 14, padding: '14px 16px',
+            background: 'var(--card)', borderRadius: 14, padding: '14px 16px',
             display: 'flex', alignItems: 'center', gap: 14,
             boxShadow: '0 2px 8px rgba(0,0,0,0.06)', marginBottom: 14,
           }}
@@ -142,10 +142,10 @@ export default function DoctorRecommendationCard({
             {recommendedDoctor.avatar || '👨‍⚕️'}
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#1e293b' }}>
+            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text)' }}>
               {recommendedDoctor.name}
             </div>
-            <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: 1 }}>
+            <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: 1 }}>
               {recommendedDoctor.specialization || recommendedDoctor.specialty}
             </div>
             <div style={{ display: 'flex', gap: 12, marginTop: 6 }}>
@@ -155,7 +155,7 @@ export default function DoctorRecommendationCard({
               <span style={{ fontSize: '0.75rem', color: '#f59e0b', fontWeight: 600 }}>
                 💛 Save ~{estimatedTimeSaved}m
               </span>
-              <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
                 ⭐ {recommendedDoctor.rating}
               </span>
             </div>
@@ -170,7 +170,7 @@ export default function DoctorRecommendationCard({
             style={{
               padding: '10px 18px', borderRadius: 10, flexShrink: 0,
               background: 'linear-gradient(135deg, #2563EB, #14B8A6)',
-              color: 'white', fontWeight: 700, fontSize: '0.85rem',
+              color: 'var(--text-muted)', fontWeight: 700, fontSize: '0.85rem',
               border: 'none', cursor: 'pointer',
               boxShadow: '0 4px 12px rgba(37,99,235,0.25)',
             }}
@@ -212,7 +212,7 @@ export default function DoctorRecommendationCard({
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.06 }}
                         style={{
-                          background: 'white', borderRadius: 12, padding: '10px 14px',
+                          background: 'var(--card)', borderRadius: 12, padding: '10px 14px',
                           display: 'flex', alignItems: 'center', gap: 10,
                           boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
                         }}

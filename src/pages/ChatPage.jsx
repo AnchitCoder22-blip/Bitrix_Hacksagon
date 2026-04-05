@@ -56,7 +56,6 @@ export default function ChatPage({ onNav }) {
 
     setTimeout(() => {
       const result = analyzeSymptoms(text);
-      const severityColors = { low: '#22c55e', medium: '#f59e0b', high: '#ef4444' };
       const botMsg = {
         id: Date.now() + 1,
         role: 'bot',
@@ -72,7 +71,7 @@ export default function ChatPage({ onNav }) {
     <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 140px)' }}>
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} style={{ marginBottom: 16 }}>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: 4 }}>AI Symptom Checker</h2>
-        <p style={{ color: '#64748b' }}>Describe your symptoms for AI-powered recommendations</p>
+        <p style={{ color: 'var(--text-secondary)' }}>Describe your symptoms for AI-powered recommendations</p>
       </motion.div>
 
       {/* Chat area */}
@@ -96,35 +95,36 @@ export default function ChatPage({ onNav }) {
                 maxWidth: '75%', padding: '14px 18px',
                 borderRadius: msg.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
                 background: msg.role === 'user'
-                  ? 'linear-gradient(135deg, #2563EB, #14B8A6)'
-                  : 'white',
-                color: msg.role === 'user' ? 'white' : '#1e293b',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+                  ? 'var(--accent-gradient)'
+                  : 'var(--card)',
+                color: msg.role === 'user' ? 'white' : 'var(--text)',
+                boxShadow: 'var(--card-shadow)',
                 fontSize: '0.9rem', lineHeight: 1.6,
+                border: msg.role === 'user' ? 'none' : '1px solid rgba(226,232,240,0.5)',
               }}>
                 <p>{msg.text}</p>
                 {msg.analysis && (
                   <div style={{
                     marginTop: 12, padding: 14, borderRadius: 12,
-                    background: '#f8fafc', border: '1px solid #e2e8f0',
+                    background: 'var(--border-light)', border: '1px solid var(--border)',
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                       <span style={{
                         padding: '3px 10px', borderRadius: 99, fontSize: '0.72rem', fontWeight: 700,
-                        background: msg.analysis.severity === 'high' ? '#fecaca' : msg.analysis.severity === 'medium' ? '#fef3c7' : '#dcfce7',
+                        background: msg.analysis.severity === 'high' ? 'rgba(239,68,68,0.1)' : msg.analysis.severity === 'medium' ? 'rgba(245,158,11,0.1)' : 'rgba(34,197,94,0.1)',
                         color: msg.analysis.severity === 'high' ? '#dc2626' : msg.analysis.severity === 'medium' ? '#b45309' : '#15803d',
                         textTransform: 'uppercase',
                       }}>
                         {msg.analysis.severity} severity
                       </span>
                     </div>
-                    <p style={{ fontSize: '0.85rem', color: '#475569', marginBottom: 10 }}>{msg.analysis.advice}</p>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 10 }}>{msg.analysis.advice}</p>
                     <button
                       onClick={() => onNav('doctors')}
                       style={{
                         padding: '8px 16px', borderRadius: 10,
-                        background: 'linear-gradient(135deg, #2563EB, #14B8A6)',
-                        color: 'white', fontWeight: 600, fontSize: '0.82rem',
+                        background: 'var(--accent-gradient)',
+                        color: 'var(--text-muted)', fontWeight: 600, fontSize: '0.82rem',
                         border: 'none', cursor: 'pointer',
                         display: 'flex', alignItems: 'center', gap: 6,
                       }}
@@ -144,9 +144,10 @@ export default function ChatPage({ onNav }) {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             style={{
               display: 'flex', alignItems: 'center', gap: 8,
-              padding: '12px 18px', background: 'white',
+              padding: '12px 18px', background: 'var(--card)',
               borderRadius: 18, width: 'fit-content',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+              boxShadow: 'var(--card-shadow)',
+              border: '1px solid rgba(226,232,240,0.5)',
             }}
           >
             {[0, 1, 2].map(i => (
@@ -156,7 +157,7 @@ export default function ChatPage({ onNav }) {
                 transition={{ repeat: Infinity, duration: 0.6, delay: i * 0.15 }}
                 style={{
                   width: 8, height: 8, borderRadius: '50%',
-                  background: '#94a3b8',
+                  background: 'var(--text-light)',
                 }}
               />
             ))}
@@ -180,9 +181,9 @@ export default function ChatPage({ onNav }) {
               onClick={() => sendMessage(s)}
               style={{
                 padding: '8px 14px', borderRadius: 99,
-                background: 'white', border: '1px solid #e2e8f0',
-                fontSize: '0.8rem', color: '#475569', fontWeight: 500,
-                cursor: 'pointer', transition: 'all 0.2s',
+                background: 'var(--card)', border: '1px solid var(--border)',
+                fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 500,
+                cursor: 'pointer', transition: 'var(--transition)',
               }}
             >
               {s}
@@ -194,7 +195,7 @@ export default function ChatPage({ onNav }) {
       {/* Input */}
       <div style={{
         display: 'flex', gap: 10, padding: '12px 0',
-        borderTop: '1px solid #e2e8f0',
+        borderTop: '1px solid var(--border)',
       }}>
         <input
           value={input}
@@ -203,8 +204,8 @@ export default function ChatPage({ onNav }) {
           placeholder="Describe your symptoms..."
           style={{
             flex: 1, padding: '14px 18px', borderRadius: 14,
-            border: '1px solid #e2e8f0', background: 'white',
-            fontSize: '0.9rem', outline: 'none',
+            border: '1px solid var(--border)', background: 'var(--card)',
+            fontSize: '0.9rem', outline: 'none', color: 'var(--text)',
           }}
         />
         <motion.button
@@ -213,7 +214,7 @@ export default function ChatPage({ onNav }) {
           onClick={() => sendMessage(input)}
           style={{
             width: 48, height: 48, borderRadius: 14,
-            background: 'linear-gradient(135deg, #2563EB, #14B8A6)',
+            background: 'var(--accent-gradient)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             border: 'none', cursor: 'pointer',
           }}

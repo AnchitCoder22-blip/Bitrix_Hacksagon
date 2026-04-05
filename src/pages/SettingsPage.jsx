@@ -22,8 +22,8 @@ export default function SettingsPage({ addToast }) {
   const ToggleSwitch = ({ checked, onChange }) => (
     <button onClick={onChange} style={{
       width: 48, height: 26, borderRadius: 99, padding: 2,
-      background: checked ? 'linear-gradient(135deg, #2563EB, #14B8A6)' : '#e2e8f0',
-      transition: 'all 0.3s', cursor: 'pointer', border: 'none',
+      background: checked ? 'var(--accent-gradient)' : 'var(--border)',
+      transition: 'var(--transition)', cursor: 'pointer', border: 'none',
       display: 'flex', alignItems: 'center',
     }}>
       <motion.div
@@ -31,7 +31,7 @@ export default function SettingsPage({ addToast }) {
         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
         style={{
           width: 22, height: 22, borderRadius: '50%',
-          background: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
+          background: 'var(--card)', boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
         }}
       />
     </button>
@@ -69,8 +69,9 @@ export default function SettingsPage({ addToast }) {
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.1 }}
           style={{
-            background: 'white', borderRadius: 20, padding: 24,
-            boxShadow: '0 4px 20px rgba(0,0,0,0.05)', marginBottom: 16,
+            background: 'var(--card)', borderRadius: 'var(--radius)', padding: 24,
+            boxShadow: 'var(--card-shadow)', marginBottom: 16,
+            border: '1px solid rgba(226,232,240,0.5)',
           }}
         >
           <h3 style={{ fontWeight: 700, marginBottom: 16, fontSize: '1.05rem' }}>{section.title}</h3>
@@ -78,11 +79,11 @@ export default function SettingsPage({ addToast }) {
             {section.items.map(item => (
               <div key={item.key} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                padding: '14px 0', borderBottom: '1px solid #f1f5f9',
+                padding: '14px 0', borderBottom: '1px solid var(--border-light)',
               }}>
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>{item.label}</div>
-                  <div style={{ color: '#94a3b8', fontSize: '0.82rem' }}>{item.desc}</div>
+                  <div style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text)' }}>{item.label}</div>
+                  <div style={{ color: 'var(--text-light)', fontSize: '0.82rem' }}>{item.desc}</div>
                 </div>
                 <ToggleSwitch checked={settings[item.key]} onChange={() => toggle(item.key)} />
               </div>
@@ -95,21 +96,22 @@ export default function SettingsPage({ addToast }) {
       <motion.div
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
         style={{
-          background: 'white', borderRadius: 20, padding: 24,
-          boxShadow: '0 4px 20px rgba(0,0,0,0.05)', marginBottom: 16,
+          background: 'var(--card)', borderRadius: 'var(--radius)', padding: 24,
+          boxShadow: 'var(--card-shadow)', marginBottom: 16,
+          border: '1px solid rgba(226,232,240,0.5)',
         }}
       >
         <h3 style={{ fontWeight: 700, marginBottom: 16, fontSize: '1.05rem' }}>Queue Settings</h3>
         <div>
-          <label style={{ display: 'block', fontWeight: 600, marginBottom: 4 }}>Alert Distance (km)</label>
-          <p style={{ color: '#94a3b8', fontSize: '0.82rem', marginBottom: 10 }}>
+          <label style={{ display: 'block', fontWeight: 600, marginBottom: 4, color: 'var(--text)' }}>Alert Distance (km)</label>
+          <p style={{ color: 'var(--text-light)', fontSize: '0.82rem', marginBottom: 10 }}>
             Get notified when you're within this distance from the clinic
           </p>
           <select value={settings.queueAlertDistance}
             onChange={e => setSettings(prev => ({ ...prev, queueAlertDistance: e.target.value }))}
             style={{
-              padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0',
-              background: 'white', fontSize: '0.9rem', outline: 'none',
+              padding: '10px 14px', borderRadius: 10, border: '1px solid var(--border)',
+              background: 'var(--card)', fontSize: '0.9rem', outline: 'none', color: 'var(--text)',
             }}
           >
             <option value="1">1 km</option>

@@ -2,10 +2,11 @@ import { useState, useCallback, useRef } from 'react';
 
 const generateId = () => Math.random().toString(36).slice(2, 9);
 
-export default function useSmartQueue(initialQueue = []) {
+export default function useSmartQueue(initialQueue = [], initialServed = []) {
   const [queue, setQueue] = useState(initialQueue);
+  const [scheduledQueue, setScheduledQueue] = useState([]);
   const [secondaryQueue, setSecondaryQueue] = useState([]);
-  const [served, setServed] = useState([]);
+  const [served, setServed] = useState(initialServed);
   const [paused, setPaused] = useState(false);
   const avgTimeRef = useRef(15);
 
@@ -21,7 +22,7 @@ export default function useSmartQueue(initialQueue = []) {
       name: patient.name || 'Patient',
       phone: patient.phone || '',
       priority: patient.priority || 'normal',
-      status: 'waiting',
+      status: patient.type === 'scheduled' ? 'pending' : 'waiting',
       arrivedAt: null,
       joinedAt: new Date().toISOString(),
       isEmergency: patient.isEmergency || false,
@@ -29,11 +30,18 @@ export default function useSmartQueue(initialQueue = []) {
       doctorId: patient.doctorId,
       doctorName: patient.doctorName,
       specialty: patient.specialty || '',
+      type: patient.type || 'instant',
+      scheduledTime: patient.scheduledTime || null
     };
-    setQueue(prev => {
-      const next = [...prev, token];
-      return applyPriority(next);
-    });
+    
+    if (patient.type === 'scheduled' && patient.scheduledTime) {
+      setScheduledQueue(prev => [...prev, token]);
+    } else {
+      setQueue(prev => {
+        const next = [...prev, token];
+        return applyPriority(next);
+      });
+    }
     return token;
   }, []);
 
@@ -43,6 +51,11 @@ export default function useSmartQueue(initialQueue = []) {
       if (!a.isEmergency && b.isEmergency) return 1;
       if (a.isVIP && !b.isVIP) return -1;
       if (!a.isVIP && b.isVIP) return 1;
+      
+      // Keep scheduled tokens chronologically correct amongst themselves if possible
+      if (a.type === 'scheduled' && b.type === 'scheduled' && a.scheduledTime && b.scheduledTime) {
+        return new Date(a.scheduledTime) - new Date(b.scheduledTime);
+      }
       return new Date(a.joinedAt) - new Date(b.joinedAt);
     });
   }, []);
@@ -139,6 +152,7 @@ export default function useSmartQueue(initialQueue = []) {
 
   return {
     queue,
+    scheduledQueue,
     secondaryQueue,
     served,
     paused,
@@ -156,5 +170,7 @@ export default function useSmartQueue(initialQueue = []) {
     getQueueHealth,
     getPosition,
     setQueue,
+    setScheduledQueue,
+    applyPriority
   };
 }

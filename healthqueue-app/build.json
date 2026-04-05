@@ -1,0 +1,52 @@
+[
+  {
+    "id": "b921d9a9-08f7-4d4d-842d-676860c459aa",
+    "status": "FINISHED",
+    "platform": "ANDROID",
+    "artifacts": {
+      "buildUrl": "https://expo.dev/artifacts/eas/oRW8bvFtW3b51x56AWdhmA.apk",
+      "applicationArchiveUrl": "https://expo.dev/artifacts/eas/oRW8bvFtW3b51x56AWdhmA.apk"
+    },
+    "fingerprint": {
+      "id": "019d5ac5-0777-7d8c-a18d-333799d96273",
+      "hash": "2b42cf043259eac9f9c8d812874b70723116301b"
+    },
+    "initiatingActor": {
+      "id": "e6c3e207-d7f6-4450-aa8c-7c2d841de648",
+      "displayName": "sourabh9926"
+    },
+    "logFiles": [
+      "https://job-logs.eascdn.net/production/b921d9a9-08f7-4d4d-842d-676860c459aa/1775344355401-b3ba7795-c31b-47d4-bedd-37b4e12be169.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260404%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260404T234026Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=b237626d3ebd00eb2568547c87e65984ae57026c0351163ad036a578c5a0fb66e939477728e640b87eb004a071c5d4bdd2f61dd96c1bf8426f3868693ca0b67fa5a48a2389f03dfd8ccb288414408b23882b2acd5c7fe78ed18dfb0b87df0afb7b667b1064d016bf1cf2014f3823e8b2605aeaaa3158890bde284cda8712c3944f4afe8f0619a6d45c1d19a799fb1cb3e31c0899d7502a8eb6f268a1df2552f7bb8a192cda0fb3a137300e5d05aad08fa11bc981dbd4c2c48f035f8beb61137a302f1ccfeb81ec7462538543b9520c4902cd5cd6f20f4ce59d6512042fce94db79b5175443d0df4f21cc62b176bd7fc82753eb39a0d0d7202ce4943a0be415e4",
+      "https://job-logs.eascdn.net/production/b921d9a9-08f7-4d4d-842d-676860c459aa/1775344357128-6858d918-297b-4111-adc8-0c2270d05334.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260404%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260404T234026Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=9bdb5bc52766f765359a28cdae94f781ae39bfddaa4d42e6585d1c6e5e31ec8684550c9f4fdc618c62ccdd25cd0df226d55e62fd82e782966323f6990f3913718471be9c70cdab95a18cfc241b79d6538a898e4c192ad94b22e2f74650a7ee670ea88de3c4eeb582e77010336762b07562c9711e6cce4f27f1510910b34ab5d71e0a3b0ebf43ec3730d106774e59a1c4c2a58a7d17264836726c4288beeb5589f3e0e15f192da8a4b8aba4f62c3f13f035b953b744c57e7bb013d1248da400a669e4a1680bef39bae4e0461c87e8ba7d655143f37278e67b9cd9a0103f3b7472d799048b185e63cf3311abfd1ee1d1e167e735926b28fa3550358d65c64e5d51",
+      "https://job-logs.eascdn.net/production/b921d9a9-08f7-4d4d-842d-676860c459aa/1775344357397-f19a9505-fc8e-41b2-a452-401ab274c2dd.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260404%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260404T234026Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=5aa34b4083a6f3ac10b1dcc8e5950df0029d3448d4197010fbae9c64a075dd9a0514a5071dda0469cfbaff7ff785b4ad0c286978ab3f97d3296483403ddc315456cd1aa8d39f6003dcc2cbe635ee7df2000283a81c37823b762d5e51be2f5fb73c49262bbc69c7f4ad6fa036488d3f26b2bdf43d54b1038e9c03f01f8cecef6a07883183c8588c12c4de6ec94ced677c5eb2e605cb31cbbf09f814ab9a779ece649eab1858ae60e5f195d8a100eb11e0909f63cb9e600f00780b8274e5277ee750ae1c6e1f3717ee12f00df1a8c57a94d4fdf63ae4c049eb533fdba856029db459564964be37998048cfd5aff7d1879cdc100af043ffe94e11a8087ef99eb8ae",
+      "https://job-logs.eascdn.net/production/b921d9a9-08f7-4d4d-842d-676860c459aa/1775344357736-c79a1413-ba5e-4ac1-b85c-12a4f674ef30.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260404%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260404T234026Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=976d75e3d6f3c15eb26233c76ad79f46646126c1f6d3f279251c4e2a3b92e4ff72446683ef23fa0567ad82c30c167c96c6e268f188426bddc2e26a554ca83ac4b87cf2349c8b7e142dc5f877304db92ae7f1ce893cc667805ae6394ed685e31ff9f4655764fae0a3867e28925d29e8a2ea8a4dfe1fe5a3581d50391a733cbdc35d93d57681d536c3a284a657728d99cd54fc471fd6e98b44cd10cfd4d35822193467c495444b1d7d666d75a303b0e920d807e6633bcc0a57cb36b47777d72d71e0caec0380323f163882934ed9c984da749801bed5f63a52253f0c0cef791d6c5f80005debc0b3eefaeffcf0a15754cbfd353a469b3f30ce8ac5b79ff606e9ed"
+    ],
+    "project": {
+      "id": "b362b2ac-f001-4cc7-abf4-985dba0e43c4",
+      "name": "healthqueue-app",
+      "slug": "healthqueue-app",
+      "ownerAccount": {
+        "id": "e4113839-55e9-4543-abce-6ced691cbfe4",
+        "name": "sourabh9926"
+      }
+    },
+    "distribution": "STORE",
+    "buildProfile": "preview",
+    "sdkVersion": "54.0.0",
+    "appVersion": "1.0.0",
+    "appBuildVersion": "1",
+    "gitCommitHash": "d9d63e62aaac8b8b855dc69d0b1da05bcefd0aeb",
+    "gitCommitMessage": "docs: Update README with comprehensive project documentation",
+    "priority": "NORMAL_PLUS",
+    "createdAt": "2026-04-04T23:12:35.158Z",
+    "updatedAt": "2026-04-04T23:30:53.146Z",
+    "completedAt": "2026-04-04T23:30:51.549Z",
+    "expirationDate": "2026-05-04T23:12:35.184Z",
+    "isForIosSimulator": false,
+    "metrics": {
+      "buildWaitTime": 109,
+      "buildQueueTime": 38924,
+      "buildDuration": 1054831
+    }
+  }
+]

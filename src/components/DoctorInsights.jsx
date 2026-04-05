@@ -25,8 +25,8 @@ export default function DoctorInsights({ queue = [], completedPatients = [], ser
       gap: 16, marginBottom: 24,
     }}>
       {[
-        { label: 'In Queue', value: queue.length, color: '#2563EB', icon: 'queue' },
-        { label: 'Avg Time (m)', value: avgConsultTime, color: '#8b5cf6', icon: 'chart' },
+        { label: 'In Queue', value: queue.length, color: '#00A9F2', icon: 'queue' },
+        { label: 'Avg Time (m)', value: avgConsultTime, color: '#787CFE', icon: 'chart' },
         { label: 'Patients Served', value: served.length, color: '#14b8a6', icon: 'check' },
         { label: 'Queue Load', value: healthLabel, color: healthColor, icon: 'chart' },
       ].map((stat, i) => (
@@ -35,8 +35,9 @@ export default function DoctorInsights({ queue = [], completedPatients = [], ser
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.1 }}
           style={{
-            background: 'white', borderRadius: 16, padding: 20,
-            boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+            background: 'var(--card)', borderRadius: 16, padding: 20,
+            boxShadow: 'var(--card-shadow)',
+            border: '1px solid rgba(226,232,240,0.5)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
@@ -46,7 +47,7 @@ export default function DoctorInsights({ queue = [], completedPatients = [], ser
             }}>
               <Icon name={stat.icon} size={18} color={stat.color} />
             </div>
-            <span style={{ fontSize: '0.82rem', color: '#94a3b8', fontWeight: 500 }}>{stat.label}</span>
+            <span style={{ fontSize: '0.82rem', color: 'var(--text-light)', fontWeight: 500 }}>{stat.label}</span>
           </div>
           <div style={{ fontSize: '1.5rem', fontWeight: 800, color: stat.color }}>{stat.value}</div>
         </motion.div>

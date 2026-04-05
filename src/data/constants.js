@@ -6,18 +6,7 @@ export const SPECIALTIES = [
   "Ophthalmologist", "Psychiatrist", "Dentist", "Urologist"
 ];
 
-export const DOCTORS = [
-  { id: 1, name: "Dr. Aisha Patel", specialty: "Cardiologist", rating: 4.9, experience: 15, fee: 800, available: true, avatar: "👩‍⚕️", patients: 12, avgTime: 15, queue: [] },
-  { id: 2, name: "Dr. Rajesh Kumar", specialty: "General Physician", rating: 4.7, experience: 10, fee: 500, available: true, avatar: "👨‍⚕️", patients: 18, avgTime: 10, queue: [] },
-  { id: 3, name: "Dr. Priya Sharma", specialty: "Dermatologist", rating: 4.8, experience: 12, fee: 700, available: true, avatar: "👩‍⚕️", patients: 8, avgTime: 20, queue: [] },
-  { id: 4, name: "Dr. Vikram Singh", specialty: "Orthopedic", rating: 4.6, experience: 20, fee: 900, available: true, avatar: "👨‍⚕️", patients: 6, avgTime: 25, queue: [] },
-  { id: 5, name: "Dr. Meera Reddy", specialty: "Pediatrician", rating: 4.9, experience: 8, fee: 600, available: false, avatar: "👩‍⚕️", patients: 15, avgTime: 12, queue: [] },
-  { id: 6, name: "Dr. Arjun Nair", specialty: "Neurologist", rating: 4.5, experience: 18, fee: 1000, available: true, avatar: "👨‍⚕️", patients: 4, avgTime: 30, queue: [] },
-  { id: 7, name: "Dr. Sanya Gupta", specialty: "ENT Specialist", rating: 4.7, experience: 9, fee: 650, available: true, avatar: "👩‍⚕️", patients: 10, avgTime: 15, queue: [] },
-  { id: 8, name: "Dr. Karthik Rao", specialty: "Ophthalmologist", rating: 4.8, experience: 14, fee: 750, available: true, avatar: "👨‍⚕️", patients: 7, avgTime: 18, queue: [] },
-  { id: 9, name: "Dr. Ananya Desai", specialty: "Orthopedic", rating: 4.8, experience: 8, fee: 800, available: true, avatar: "👩‍⚕️", patients: 1, avgTime: 15, queue: [] },
-  { id: 10, name: "Dr. Rohan Mehta", specialty: "Cardiologist", rating: 4.6, experience: 12, fee: 700, available: true, avatar: "👨‍⚕️", patients: 2, avgTime: 12, queue: [] },
-];
+export { DOCTORS } from './mockDoctors';
 
 export const LAB_TESTS = [
   { id: 1, name: "Complete Blood Count (CBC)", price: 350, duration: "4-6 hours", category: "Blood", icon: "🩸", description: "Measures components of blood including red and white blood cells" },

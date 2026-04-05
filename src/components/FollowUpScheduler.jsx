@@ -35,13 +35,13 @@ export default function FollowUpScheduler({ patient, doctor, existingAppointment
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 10 }}
         style={{
-          background: 'white', borderRadius: 20, padding: 24,
+          background: 'var(--card)', borderRadius: 'var(--radius)', padding: 24,
           width: '100%', maxWidth: 400, boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <h3 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>Schedule Follow-up</h3>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', color: '#64748b' }}>✕</button>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', color: 'var(--text-secondary)' }}>✕</button>
         </div>
 
         <div style={{ marginBottom: 20, padding: 12, background: '#f0fdf4', borderRadius: 12, border: '1px solid #bbf7d0' }}>
@@ -54,7 +54,7 @@ export default function FollowUpScheduler({ patient, doctor, existingAppointment
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
-            <label style={{ display: 'block', marginBottom: 6, fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>Date</label>
+            <label style={{ display: 'block', marginBottom: 6, fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Date</label>
             <input 
               type="date"
               min={new Date().toISOString().split('T')[0]}
@@ -67,7 +67,7 @@ export default function FollowUpScheduler({ patient, doctor, existingAppointment
             />
           </div>
           <div>
-            <label style={{ display: 'block', marginBottom: 6, fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>Time</label>
+            <label style={{ display: 'block', marginBottom: 6, fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Time</label>
             <input 
               type="time" 
               value={selectedTime}
@@ -87,7 +87,7 @@ export default function FollowUpScheduler({ patient, doctor, existingAppointment
             onClick={onClose}
             style={{
               flex: 1, padding: '10px', borderRadius: 10,
-              background: '#f1f5f9', color: '#475569', fontWeight: 600,
+              background: 'var(--border-light)', color: 'var(--text-secondary)', fontWeight: 600,
               border: 'none', cursor: 'pointer'
             }}
           >
@@ -98,7 +98,7 @@ export default function FollowUpScheduler({ patient, doctor, existingAppointment
             style={{
               flex: 1, padding: '10px', borderRadius: 10,
               background: 'linear-gradient(135deg, #16a34a, #059669)',
-              color: 'white', fontWeight: 600, border: 'none', cursor: 'pointer'
+              color: 'var(--text-muted)', fontWeight: 600, border: 'none', cursor: 'pointer'
             }}
           >
             Confirm Booking

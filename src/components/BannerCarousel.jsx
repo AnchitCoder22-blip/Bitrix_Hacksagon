@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const banners = [
-  { title: 'AI Health Insights', desc: 'Get symptom analysis powered by AI', gradient: 'linear-gradient(135deg, #2563EB, #7c3aed)', emoji: '🤖' },
-  { title: 'Zero Wait Queues', desc: 'Real-time tracking & smart scheduling', gradient: 'linear-gradient(135deg, #14B8A6, #2563EB)', emoji: '⚡' },
+  { title: 'AI Health Insights', desc: 'Get symptom analysis powered by AI', gradient: 'linear-gradient(135deg, #00A9F2, #787CFE)', emoji: '🤖' },
+  { title: 'Zero Wait Queues', desc: 'Real-time tracking & smart scheduling', gradient: 'linear-gradient(135deg, #14B8A6, #00A9F2)', emoji: '⚡' },
   { title: 'Lab Tests at Home', desc: 'Book tests online, results delivered fast', gradient: 'linear-gradient(135deg, #f59e0b, #ef4444)', emoji: '🧪' },
-  { title: 'Emergency Care', desc: '24/7 priority access for emergencies', gradient: 'linear-gradient(135deg, #ef4444, #ec4899)', emoji: '🚨' },
+  { title: 'Emergency Care', desc: '24/7 priority access for emergencies', gradient: 'linear-gradient(135deg, #ef4444, #C53F7B)', emoji: '🚨' },
 ];
 
 export default function BannerCarousel() {
@@ -17,7 +17,7 @@ export default function BannerCarousel() {
   }, []);
 
   return (
-    <div style={{ position: 'relative', height: 160, borderRadius: 20, overflow: 'hidden' }}>
+    <div style={{ position: 'relative', height: 160, borderRadius: 'var(--radius)', overflow: 'hidden' }}>
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
@@ -28,9 +28,9 @@ export default function BannerCarousel() {
           style={{
             position: 'absolute', inset: 0,
             background: banners[current].gradient,
-            borderRadius: 20, padding: 28,
+            borderRadius: 'var(--radius)', padding: 28,
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            color: 'white',
+            color: 'var(--text-muted)',
           }}
         >
           <div>
@@ -52,7 +52,7 @@ export default function BannerCarousel() {
               width: i === current ? 24 : 8, height: 8,
               borderRadius: 99, border: 'none',
               background: i === current ? 'white' : 'rgba(255,255,255,0.4)',
-              transition: 'all 0.3s', cursor: 'pointer',
+              transition: 'var(--transition)', cursor: 'pointer',
             }}
           />
         ))}

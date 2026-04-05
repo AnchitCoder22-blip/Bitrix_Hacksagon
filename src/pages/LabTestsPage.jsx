@@ -26,7 +26,7 @@ export default function LabTestsPage({ addToast }) {
     <div>
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} style={{ marginBottom: 24 }}>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: 4 }}>Lab Tests</h2>
-        <p style={{ color: '#64748b' }}>Book diagnostic tests online with fast results</p>
+        <p style={{ color: 'var(--text-secondary)' }}>Book diagnostic tests online with fast results</p>
       </motion.div>
 
       {/* Search & Filter */}
@@ -36,12 +36,12 @@ export default function LabTestsPage({ addToast }) {
       >
         <div style={{
           flex: 1, minWidth: 240, display: 'flex', alignItems: 'center', gap: 10,
-          background: 'white', borderRadius: 12, padding: '0 16px', border: '1px solid #e2e8f0',
+          background: 'var(--card)', borderRadius: 12, padding: '0 16px', border: '1px solid var(--border)',
         }}>
-          <Icon name="search" size={18} color="#94a3b8" />
+          <Icon name="search" size={18} color="var(--text-light)" />
           <input value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Search tests..."
-            style={{ flex: 1, padding: '12px 0', border: 'none', outline: 'none', background: 'none', fontSize: '0.9rem' }}
+            style={{ flex: 1, padding: '12px 0', border: 'none', outline: 'none', background: 'none', fontSize: '0.9rem', color: 'var(--text)' }}
           />
         </div>
       </motion.div>
@@ -52,10 +52,10 @@ export default function LabTestsPage({ addToast }) {
           <button key={c} onClick={() => setCategory(c)}
             style={{
               padding: '8px 16px', borderRadius: 99, fontSize: '0.82rem', fontWeight: 600,
-              background: category === c ? 'linear-gradient(135deg, #2563EB, #14B8A6)' : 'white',
-              color: category === c ? 'white' : '#64748b',
-              border: category === c ? 'none' : '1px solid #e2e8f0',
-              cursor: 'pointer', transition: 'all 0.2s',
+              background: category === c ? 'var(--accent-gradient)' : 'var(--card)',
+              color: category === c ? 'white' : 'var(--text-secondary)',
+              border: category === c ? 'none' : '1px solid var(--border)',
+              cursor: 'pointer', transition: 'var(--transition)',
             }}
           >{c}</button>
         ))}
@@ -72,15 +72,16 @@ export default function LabTestsPage({ addToast }) {
             transition={{ delay: i * 0.05 }}
             whileHover={{ y: -4 }}
             style={{
-              background: 'white', borderRadius: 16, padding: 20,
-              boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-              transition: 'all 0.3s',
+              background: 'var(--card)', borderRadius: 16, padding: 20,
+              boxShadow: 'var(--card-shadow)',
+              border: '1px solid rgba(226,232,240,0.5)',
+              transition: 'var(--transition)',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
               <span style={{
                 width: 44, height: 44, borderRadius: 12,
-                background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: 'var(--border-light)', display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 22,
               }}>{test.icon}</span>
               <div style={{ flex: 1 }}>
@@ -88,14 +89,14 @@ export default function LabTestsPage({ addToast }) {
                 <span className="badge badge-info" style={{ fontSize: '0.7rem' }}>{test.category}</span>
               </div>
             </div>
-            <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: 14, lineHeight: 1.5 }}>{test.description}</p>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: 14, lineHeight: 1.5 }}>{test.description}</p>
             <div style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              borderTop: '1px solid #f1f5f9', paddingTop: 14,
+              borderTop: '1px solid var(--border-light)', paddingTop: 14,
             }}>
               <div>
-                <span style={{ fontWeight: 700, color: '#2563EB', fontSize: '1.05rem' }}>₹{test.price}</span>
-                <span style={{ color: '#94a3b8', fontSize: '0.8rem', marginLeft: 8 }}>
+                <span style={{ fontWeight: 700, color: 'var(--primary)', fontSize: '1.05rem' }}>₹{test.price}</span>
+                <span style={{ color: 'var(--text-light)', fontSize: '0.8rem', marginLeft: 8 }}>
                   <Icon name="clock" size={12} style={{ verticalAlign: 'middle' }} /> {test.duration}
                 </span>
               </div>
@@ -106,7 +107,7 @@ export default function LabTestsPage({ addToast }) {
                 disabled={booked.includes(test.id)}
                 style={{
                   padding: '8px 18px', borderRadius: 10,
-                  background: booked.includes(test.id) ? '#dcfce7' : 'linear-gradient(135deg, #2563EB, #14B8A6)',
+                  background: booked.includes(test.id) ? 'rgba(34,197,94,0.1)' : 'var(--accent-gradient)',
                   color: booked.includes(test.id) ? '#15803d' : 'white',
                   fontWeight: 600, fontSize: '0.85rem', border: 'none', cursor: booked.includes(test.id) ? 'default' : 'pointer',
                 }}

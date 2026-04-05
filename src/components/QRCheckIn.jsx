@@ -19,7 +19,7 @@ export default function QRCheckIn({ token, onCheckIn, onClose }) {
         transition={{ type: 'spring', stiffness: 400, damping: 28 }}
         onClick={e => e.stopPropagation()}
         style={{
-          background: 'white', borderRadius: 24, padding: 36,
+          background: 'var(--card)', borderRadius: 24, padding: 36,
           maxWidth: 380, width: '100%', textAlign: 'center',
           boxShadow: '0 24px 60px rgba(0,0,0,0.15)',
         }}
@@ -41,7 +41,7 @@ export default function QRCheckIn({ token, onCheckIn, onClose }) {
           />
         </div>
         <h3 style={{ fontSize: '1.25rem', marginBottom: 8 }}>QR Check-In</h3>
-        <p style={{ color: '#64748b', marginBottom: 8 }}>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: 8 }}>
           Token <strong>#{token?.tokenNumber}</strong>
         </p>
         <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: 24 }}>
@@ -52,7 +52,7 @@ export default function QRCheckIn({ token, onCheckIn, onClose }) {
           style={{
             width: '100%', padding: '14px', borderRadius: 12,
             background: 'linear-gradient(135deg, #22c55e, #14B8A6)',
-            color: 'white', fontWeight: 600, fontSize: '1rem',
+            color: 'var(--text-muted)', fontWeight: 600, fontSize: '1rem',
             border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
           }}

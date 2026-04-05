@@ -15,10 +15,15 @@ import EmergencyPage from './pages/EmergencyPage';
 import ChatPage from './pages/ChatPage';
 import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
-import RoleSelection from './pages/RoleSelection';
+import Login from './pages/Login';
+import PendingApprovalPage from './pages/PendingApprovalPage';
 import DoctorDashboard from './pages/DoctorDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import AnalyticsPage from './pages/AnalyticsPage';
+
+// Prototype Feature Flag
+const ENABLE_PROTOTYPE = true;
+import PrototypeApp from './prototype/PrototypeApp';
 
 // Components
 import ToastContainer, { useToast } from './components/ToastContainer';
@@ -32,8 +37,12 @@ import UpcomingAppointments from './components/UpcomingAppointments';
 
 // Hooks
 import useSmartQueue from './hooks/useSmartQueue';
-import useUserRole from './hooks/useUserRole';
+import useScheduledQueue from './hooks/useScheduledQueue';
+import useAuth from './hooks/useAuth';
+import useTheme from './hooks/useTheme';
 import ProtectedRoute from './components/ProtectedRoute';
+import ThemeToggle from './components/ThemeToggle';
+
 
 // Utils
 import { startConsultation, endConsultation, getCompletedPatients } from './utils/consultationTracker';
@@ -63,20 +72,26 @@ const pageTitles = {
   'doctor-dashboard': 'Doctor Dashboard',
   admin: 'Admin Dashboard',
   analytics: 'Analytics',
+  prototype: 'Feature Sandbox',
 };
 
 export default function App() {
-  const { role, setRole, clearRole } = useUserRole();
+  const { role, currentUser, login, logout, updateActivity } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [page, setPage] = useState(role ? 'landing' : 'select-role');
-  const [user, setUser] = useState({ name: 'Alex Johnson', email: 'alex@email.com' });
+
+  
+  const user = currentUser?.data || { name: 'Guest', email: 'guest@email.com' };
+  const setUser = () => {}; // mock for profile updates
+
   const [doctors, setDoctors] = useState(DOCTORS);
   const [tokens, setTokens] = useState([]);
   const [showTurnPopup, setShowTurnPopup] = useState(false);
   const [showQRCheckIn, setShowQRCheckIn] = useState(false);
   const [selectedToken, setSelectedToken] = useState(null);
   const [completedPatients, setCompletedPatients] = useState([]);
-  const [showPrediction] = useState(true); // toggle to false to hide WaitTimeCard
-  const [showRecommendation] = useState(true); // toggle to hide doctor recommendations
+  const [showPrediction] = useState(true); 
+  const [showRecommendation] = useState(true);
 
   const [followUpAppointments, setFollowUpAppointments] = useState([]);
   const [selectedRescheduleToken, setSelectedRescheduleToken] = useState(null);
@@ -87,18 +102,50 @@ export default function App() {
     if (!role && page !== 'select-role') {
       setPage('select-role');
     } else if (role && page === 'select-role') {
-      setPage(role === 'doctor' ? 'doctor-dashboard' : 'landing');
+      if (role === 'doctor') {
+        if (currentUser?.data?.status === 'pending') setPage('pending-approval');
+        else setPage('doctor-dashboard');
+      } else if (role === 'admin') {
+        setPage('admin');
+      } else {
+        setPage('patient-dashboard');
+      }
     }
-  }, [role, page]);
+  }, [role, page, currentUser]);
+
+  const initialQueue = DOCTORS.flatMap(doc => 
+    (doc.patients || [])
+      .filter(p => !['served', 'skipped', 'no-show'].includes(p.status))
+      .map(p => ({
+        ...p,
+        doctorId: doc.id,
+        doctorName: doc.name || doc.username,
+        specialty: doc.specialty || doc.specialization
+      }))
+  );
+
+  const initialServed = DOCTORS.flatMap(doc => 
+    (doc.patients || [])
+      .filter(p => p.status === 'served')
+      .map(p => ({
+        ...p,
+        doctorId: doc.id,
+        doctorName: doc.name || doc.username,
+        specialty: doc.specialty || doc.specialization
+      }))
+  );
 
   const { toasts, addToast, removeToast } = useToast();
   const {
-    queue, secondaryQueue, served, paused,
+    queue, scheduledQueue, secondaryQueue, served, paused,
     addPatient, nextPatient, skipPatient, handleNoShow,
     markArrived, markEmergency, moveUp, moveDown,
     togglePause, estimateWaitTime, getQueueHealth,
-    getPosition,
-  } = useSmartQueue();
+    getPosition, setQueue, setScheduledQueue, applyPriority
+  } = useSmartQueue(initialQueue, initialServed);
+
+  // Initialize global observer for auto-activating scheduled queues when the time arrives
+  useScheduledQueue(scheduledQueue, setScheduledQueue, setQueue, applyPriority);
 
   // Navigation
   const onNav = useCallback((p) => {
@@ -118,17 +165,20 @@ export default function App() {
   }, [onNav]);
 
   // Book a doctor
-  const handleBookDoctor = useCallback((doctor) => {
+  const handleBookDoctor = useCallback((doctor, isScheduled = false, scheduledTime = null) => {
     const token = addPatient({
       name: user.name,
       doctorId: doctor.id,
       doctorName: doctor.name,
       specialty: doctor.specialty,
+      type: isScheduled ? 'scheduled' : 'instant',
+      scheduledTime: scheduledTime
     });
     setTokens(prev => [...prev, token]);
     addToast(`Token #${token.tokenNumber} booked with ${doctor.name}!`, 'success');
+    updateActivity('book_token', { doctorName: doctor.name, tokenNumber: token.tokenNumber });
     setPage('queue');
-  }, [addPatient, user.name, addToast]);
+  }, [addPatient, user.name, addToast, updateActivity]);
 
   // Emergency book
   const handleEmergencyBook = useCallback(() => {
@@ -154,10 +204,11 @@ export default function App() {
       markArrived(selectedToken.id);
       setTokens(prev => prev.map(t => t.id === selectedToken.id ? { ...t, status: 'arrived' } : t));
       addToast('Check-in confirmed! You are now marked as arrived.', 'success');
+      updateActivity('check_in', { tokenNumber: selectedToken.tokenNumber });
     }
     setShowQRCheckIn(false);
     setSelectedToken(null);
-  }, [selectedToken, markArrived, addToast]);
+  }, [selectedToken, markArrived, addToast, updateActivity]);
 
   // Turn alert simulation
   useEffect(() => {
@@ -172,6 +223,17 @@ export default function App() {
       }
     }
   }, [queue, tokens, getPosition]);
+
+  // Synchronize dynamic status updates (like pending -> waiting) from the queue back to tokens state
+  useEffect(() => {
+    if (queue.length > 0 || scheduledQueue.length > 0) {
+      setTokens(prevTokens => prevTokens.map(t => {
+        const liveMatch = queue.find(q => q.id === t.id);
+        if (liveMatch && t.status !== liveMatch.status) return { ...t, status: liveMatch.status };
+        return t;
+      }));
+    }
+  }, [queue, scheduledQueue]);
 
   // Page content renderer
   const renderDashboardPage = () => {
@@ -234,6 +296,7 @@ export default function App() {
             onSkip={skipPatient}
             onTogglePause={togglePause}
             addToast={addToast}
+            user={user}
             onStartConsultation={(patientId) => startConsultation(patientId)}
             onEndConsultation={(patientId) => {
               endConsultation(patientId);
@@ -246,18 +309,25 @@ export default function App() {
           </ProtectedRoute>
         );
       case 'admin':
+        const approvedCache = JSON.parse(window.localStorage.getItem('approvedDoctors') || '[]');
+        const combinedDocs = [...doctors, ...approvedCache];
         return (
           <ProtectedRoute roleRequired="admin" currentRole={role} fallbackPage="select-role" onRedirect={onNav}>
             <AdminDashboard
-              doctors={doctors} queue={queue} served={served}
+              doctors={combinedDocs} queue={queue} scheduledQueue={scheduledQueue} setQueue={setQueue} served={served}
               queueHealth={getQueueHealth} onMoveUp={moveUp}
               onMoveDown={moveDown} onMarkEmergency={markEmergency}
+              addPatient={addPatient}
               addToast={addToast}
             />
           </ProtectedRoute>
         );
       case 'analytics':
         return <ProtectedRoute roleRequired="admin" currentRole={role} fallbackPage="select-role" onRedirect={onNav}><AnalyticsPage /></ProtectedRoute>;
+      case 'pending-approval':
+        return <PendingApprovalPage onLogout={logout} />;
+      case 'prototype':
+        return ENABLE_PROTOTYPE ? <PrototypeApp /> : <div>Prototype Disabled</div>;
       default:
         return <ProtectedRoute roleRequired="patient" currentRole={role} fallbackPage="select-role" onRedirect={onNav}><PatientDashboard onNav={onNav} tokens={tokens} user={user} /></ProtectedRoute>;
     }
@@ -266,30 +336,39 @@ export default function App() {
   // Landing page (no dashboard layout)
   if (page === 'select-role') {
     return (
-      <>
-        <RoleSelection onSelectRole={(r) => setRole(r)} />
+      <div className={theme === "dark" ? "dark" : "light"} style={{ minHeight: '100vh', transition: '0.3s', position: 'relative' }}>
+        <Login onLoginSuccess={login} />
         <ToastContainer toasts={toasts} removeToast={removeToast} />
-      </>
+        <div className="hq-theme-toggle-wrapper" style={{ position: 'fixed', top: 20, right: 20, zIndex: 99999 }}>
+          <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+        </div>
+      </div>
     );
   }
 
   if (page === 'landing') {
     return (
-      <ProtectedRoute roleRequired="patient" currentRole={role} fallbackPage="select-role" onRedirect={onNav}>
-        <LandingPage onNav={onNav} />
-        <ToastContainer toasts={toasts} removeToast={removeToast} />
-      </ProtectedRoute>
+      <div className={theme === "dark" ? "dark" : "light"} style={{ minHeight: '100vh', transition: '0.3s', position: 'relative' }}>
+        <ProtectedRoute roleRequired="patient" currentRole={role} fallbackPage="select-role" onRedirect={onNav}>
+          <LandingPage onNav={onNav} />
+          <ToastContainer toasts={toasts} removeToast={removeToast} />
+        </ProtectedRoute>
+        <div className="hq-theme-toggle-wrapper" style={{ position: 'fixed', top: 20, right: 20, zIndex: 99999 }}>
+          <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+        </div>
+      </div>
     );
   }
 
   // Dashboard pages
   return (
-    <>
+    <div className={theme === "dark" ? "dark" : "light"} style={{ minHeight: '100vh', transition: '0.3s', position: 'relative' }}>
       <DashLayout
         currentPage={page}
         onNav={onNav}
         role={role}
         user={user}
+        onLogout={logout}
         title={pageTitles[page] || 'Dashboard'}
       >
         <AnimatePresence mode="wait">
@@ -369,6 +448,20 @@ export default function App() {
       >
         Doctor Nav
       </button>
-    </>
+
+      {ENABLE_PROTOTYPE && (
+        <button 
+          style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 99999, background: '#2563EB', color: 'white', border: 'none', padding: '10px 16px', borderRadius: '12px', fontWeight: 600, cursor: 'pointer', boxShadow: '0 4px 12px rgba(37,99,235,0.3)' }}
+          onClick={() => onNav('prototype')}
+        >
+          {page === 'prototype' ? 'Back to App' : 'View Prototype'}
+        </button>
+      )}
+
+      {/* Global Dashboard Theme Toggle */}
+      <div className="hq-theme-toggle-wrapper" style={{ position: 'fixed', top: 12, right: 120, zIndex: 99999 }}>
+        <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+      </div>
+    </div>
   );
 }

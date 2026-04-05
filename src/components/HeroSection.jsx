@@ -23,7 +23,8 @@ export default function HeroSection({ onBookAppointment, onExploreDoctors }) {
       {/* Glow gradient background */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(20,184,166,0.08) 0%, transparent 60%)',
+        background: 'radial-gradient(ellipse at 30% 50%, rgba(0,169,242,0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(20,184,166,0.08) 0%, transparent 60%)',
+        pointerEvents: 'none',
       }} />
 
       {/* Floating shapes */}
@@ -41,15 +42,17 @@ export default function HeroSection({ onBookAppointment, onExploreDoctors }) {
             width: 60 + i * 20, height: 60 + i * 20,
             borderRadius: '50%',
             background: i % 2
-              ? 'linear-gradient(135deg, rgba(37,99,235,0.06), rgba(37,99,235,0.02))'
+              ? 'linear-gradient(135deg, rgba(0,169,242,0.06), rgba(0,169,242,0.02))'
               : 'linear-gradient(135deg, rgba(20,184,166,0.06), rgba(20,184,166,0.02))',
             top: `${15 + i * 12}%`,
             left: `${10 + i * 15}%`,
+            pointerEvents: 'none',
           }}
         />
       ))}
 
       <div style={{
+        position: 'relative', zIndex: 10,
         maxWidth: 1200, margin: '0 auto', width: '100%',
         display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center',
       }}>
@@ -65,9 +68,9 @@ export default function HeroSection({ onBookAppointment, onExploreDoctors }) {
             transition={{ delay: 0.2 }}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
-              background: 'linear-gradient(135deg, #eff6ff, #ecfdf5)',
+              background: 'linear-gradient(135deg, rgba(0,169,242,0.1), rgba(20,184,166,0.1))',
               padding: '8px 16px', borderRadius: 99, fontSize: '0.85rem',
-              fontWeight: 600, color: '#2563EB', marginBottom: 24,
+              fontWeight: 600, color: 'var(--primary)', marginBottom: 24,
             }}
           >
             🚀 AI-Powered Healthcare
@@ -78,14 +81,11 @@ export default function HeroSection({ onBookAppointment, onExploreDoctors }) {
             lineHeight: 1.1, marginBottom: 20, letterSpacing: '-0.03em',
           }}>
             Smart Healthcare{' '}
-            <span style={{
-              background: 'linear-gradient(135deg, #2563EB, #14B8A6)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>Queue System</span>
+            <span className="hq-gradient-text">Queue System</span>
           </h1>
 
           <p style={{
-            fontSize: '1.1rem', color: '#64748b', lineHeight: 1.7,
+            fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: 1.7,
             maxWidth: 520, marginBottom: 36,
           }}>
             No more long waits. Track your queue in real-time, get AI-powered health insights, 
@@ -128,14 +128,14 @@ export default function HeroSection({ onBookAppointment, onExploreDoctors }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 + i * 0.1 }}
               >
-                <div style={{ fontSize: '1.5rem', fontWeight: 800 }} className="gradient-text">{s.value}</div>
-                <div style={{ fontSize: '0.85rem', color: '#94a3b8' }}>{s.label}</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 800 }} className="hq-gradient-text">{s.value}</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-light)' }}>{s.label}</div>
               </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* Hero visual - 3D Doctor illustration */}
+        {/* Hero visual */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -155,17 +155,16 @@ export default function HeroSection({ onBookAppointment, onExploreDoctors }) {
           >
             <div style={{
               width: 'min(400px, 80vw)', height: 'min(400px, 80vw)',
-              background: 'linear-gradient(135deg, rgba(37,99,235,0.08), rgba(20,184,166,0.08))',
+              background: 'linear-gradient(135deg, rgba(0,169,242,0.08), rgba(20,184,166,0.08))',
               borderRadius: '50%',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               position: 'relative',
             }}>
-              <div style={{
+              <div className="hq-shadow-glow" style={{
                 width: '85%', height: '85%',
-                background: 'linear-gradient(135deg, rgba(37,99,235,0.1), rgba(20,184,166,0.1))',
+                background: 'linear-gradient(135deg, rgba(0,169,242,0.1), rgba(20,184,166,0.1))',
                 borderRadius: '50%',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 0 60px rgba(37,99,235,0.15)',
               }}>
                 <span style={{ fontSize: 'min(140px, 30vw)' }}>👨‍⚕️</span>
               </div>
@@ -181,13 +180,13 @@ export default function HeroSection({ onBookAppointment, onExploreDoctors }) {
                   key={i}
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 3, repeat: Infinity, delay: item.delay, ease: 'easeInOut' }}
+                  className="hq-card"
                   style={{
                     position: 'absolute', ...item,
                     width: 52, height: 52,
-                    background: 'white', borderRadius: 14,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
-                    fontSize: 24,
+                    fontSize: 24, padding: 0,
+                    borderRadius: 14,
                   }}
                 >
                   {item.emoji}

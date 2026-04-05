@@ -13,7 +13,7 @@ export default function UpcomingAppointments({ followUpAppointments = [] }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       style={{
-        background: 'white', borderRadius: 20, padding: 24,
+        background: 'var(--card)', borderRadius: 20, padding: 24,
         boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
         marginTop: 24
       }}
@@ -38,12 +38,12 @@ export default function UpcomingAppointments({ followUpAppointments = [] }) {
               }}
             >
               <div>
-                <div style={{ fontWeight: 700, color: '#1e293b' }}>{appt.patientName}</div>
-                <div style={{ fontSize: '0.8rem', color: '#64748b' }}>With {appt.doctorName} ({appt.specialty})</div>
+                <div style={{ fontWeight: 700, color: 'var(--text)' }}>{appt.patientName}</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>With {appt.doctorName} ({appt.specialty})</div>
               </div>
               <div style={{ textAlign: 'right' }}>
                 <div style={{ fontWeight: 600, color: '#2563EB' }}>{dateStr}</div>
-                <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{timeStr}</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{timeStr}</div>
               </div>
             </div>
           );

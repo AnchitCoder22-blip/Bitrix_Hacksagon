@@ -13,14 +13,12 @@ export default function Navbar({ currentPage, onNav, onLogin }) {
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
+      className="hq-glass hq-navbar"
       style={{
         position: 'fixed', top: 0, left: 0, right: 0,
         height: 64, padding: '0 24px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: 'rgba(255,255,255,0.85)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: '1px solid rgba(226,232,240,0.6)',
+        borderBottom: '1px solid var(--border)',
         zIndex: 1000,
       }}
     >
@@ -30,27 +28,28 @@ export default function Navbar({ currentPage, onNav, onLogin }) {
       >
         <div style={{
           width: 36, height: 36, borderRadius: 10,
-          background: 'linear-gradient(135deg, #2563EB, #14B8A6)',
+          background: 'var(--accent-gradient)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 20,
         }}>
           🏥
         </div>
         <span style={{ fontWeight: 800, fontSize: '1.15rem' }}>
-          <span style={{ background: 'linear-gradient(135deg, #2563EB, #14B8A6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Health</span>Queue
+          <span className="hq-gradient-text">Health</span><span style={{ color: 'var(--text)' }}>Queue</span>
         </span>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+      <div className="hq-nav-links-container" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
         {links.map(l => (
           <button key={l.page} onClick={() => onNav(l.page)}
+            className="hq-nav-btn"
             style={{
-              padding: '8px 16px', borderRadius: 10,
+              padding: '8px 16px', borderRadius: 'var(--radius-sm)',
               display: 'flex', alignItems: 'center', gap: 6,
               fontSize: '0.88rem', fontWeight: 500,
-              color: currentPage === l.page ? '#2563EB' : '#64748b',
-              background: currentPage === l.page ? '#eff6ff' : 'transparent',
-              transition: 'all 0.2s',
+              color: currentPage === l.page ? 'var(--primary)' : 'var(--text-secondary)',
+              background: currentPage === l.page ? 'rgba(0, 169, 242, 0.1)' : 'transparent',
+              transition: 'var(--transition)',
             }}
           >
             <Icon name={l.icon} size={16} />
@@ -59,13 +58,16 @@ export default function Navbar({ currentPage, onNav, onLogin }) {
         ))}
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <button onClick={onLogin}
+      <div className="hq-navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onLogin}
           className="btn-primary"
           style={{ padding: '8px 20px', fontSize: '0.85rem' }}
         >
           Get Started
-        </button>
+        </motion.button>
       </div>
     </motion.nav>
   );

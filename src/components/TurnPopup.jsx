@@ -24,7 +24,7 @@ export default function TurnPopup({ show, token, patientsAhead, onNavigate, onOn
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             onClick={e => e.stopPropagation()}
             style={{
-              background: 'white',
+              background: 'var(--card)',
               borderRadius: 24,
               padding: 32,
               maxWidth: 400,
@@ -40,13 +40,13 @@ export default function TurnPopup({ show, token, patientsAhead, onNavigate, onOn
                 width: 80, height: 80, borderRadius: '50%',
                 background: 'linear-gradient(135deg, #2563EB, #14B8A6)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                margin: '0 auto 20px', fontSize: 36, color: 'white',
+                margin: '0 auto 20px', fontSize: 36, color: 'var(--text-muted)',
               }}
             >
               🔔
             </motion.div>
             <h2 style={{ fontSize: '1.5rem', marginBottom: 8 }}>Your Turn is Near!</h2>
-            <p style={{ color: '#64748b', marginBottom: 20 }}>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 20 }}>
               Token <strong>#{token?.tokenNumber}</strong> — <strong>{patientsAhead}</strong> patient{patientsAhead !== 1 ? 's' : ''} ahead
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -55,7 +55,7 @@ export default function TurnPopup({ show, token, patientsAhead, onNavigate, onOn
                 style={{
                   padding: '14px 28px', borderRadius: 12,
                   background: 'linear-gradient(135deg, #2563EB, #14B8A6)',
-                  color: 'white', fontWeight: 600, fontSize: '0.95rem',
+                  color: 'var(--text-muted)', fontWeight: 600, fontSize: '0.95rem',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                   border: 'none', cursor: 'pointer',
                 }}

@@ -34,28 +34,28 @@ export default function RescheduleModal({ token, onReschedule, onClose }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 10 }}
         style={{
-          background: 'white', borderRadius: 20, padding: 24,
+          background: 'var(--card)', borderRadius: 'var(--radius)', padding: 24,
           width: '100%', maxWidth: 400, boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <h3 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>Reschedule Token</h3>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', color: '#64748b' }}>✕</button>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', color: 'var(--text-secondary)' }}>✕</button>
         </div>
 
-        <div style={{ marginBottom: 20, padding: 12, background: '#f8fafc', borderRadius: 12 }}>
+        <div style={{ marginBottom: 20, padding: 12, background: 'var(--border-light)', borderRadius: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#2563EB' }}>#{token.tokenNumber}</span>
+            <span style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--primary)' }}>#{token.tokenNumber}</span>
             <span style={{ fontWeight: 600 }}>{token.name}</span>
           </div>
-          <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: 4 }}>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: 4 }}>
             Doctor: {token.doctorName}
           </div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
-            <label style={{ display: 'block', marginBottom: 6, fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>Select Date</label>
+            <label style={{ display: 'block', marginBottom: 6, fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Select Date</label>
             <input 
               type="date"
               min={new Date().toISOString().split('T')[0]}
@@ -68,7 +68,7 @@ export default function RescheduleModal({ token, onReschedule, onClose }) {
             />
           </div>
           <div>
-            <label style={{ display: 'block', marginBottom: 6, fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>Select Time</label>
+            <label style={{ display: 'block', marginBottom: 6, fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Select Time</label>
             <input 
               type="time" 
               value={selectedTime}
@@ -88,7 +88,7 @@ export default function RescheduleModal({ token, onReschedule, onClose }) {
             onClick={onClose}
             style={{
               flex: 1, padding: '10px', borderRadius: 10,
-              background: '#f1f5f9', color: '#475569', fontWeight: 600,
+              background: 'var(--border-light)', color: 'var(--text-secondary)', fontWeight: 600,
               border: 'none', cursor: 'pointer'
             }}
           >
@@ -98,8 +98,8 @@ export default function RescheduleModal({ token, onReschedule, onClose }) {
             onClick={handleConfirm}
             style={{
               flex: 1, padding: '10px', borderRadius: 10,
-              background: 'linear-gradient(135deg, #2563EB, #14B8A6)',
-              color: 'white', fontWeight: 600, border: 'none', cursor: 'pointer'
+              background: 'var(--accent-gradient)',
+              color: 'var(--text-muted)', fontWeight: 600, border: 'none', cursor: 'pointer'
             }}
           >
             Confirm

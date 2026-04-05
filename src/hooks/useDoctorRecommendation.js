@@ -52,6 +52,8 @@ export default function useDoctorRecommendation(currentDoctor = null, doctorsLis
           ? doc.queueLength
           : typeof doc.patients === 'number'
           ? doc.patients
+          : Array.isArray(doc.patients)
+          ? doc.patients.length
           : 0,
     });
 

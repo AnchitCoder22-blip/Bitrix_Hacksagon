@@ -21,7 +21,7 @@ const menuItems = [
   { label: 'Settings', page: 'settings', icon: 'settings', roles: ['patient', 'doctor', 'admin'] },
 ];
 
-export default function Sidebar({ currentPage, onNav, role, user, collapsed, onToggle, onSwitchRole }) {
+export default function Sidebar({ currentPage, onNav, role, user, collapsed, onToggle, onSwitchRole, onLogout }) {
   const filteredItems = menuItems.filter(m => m.roles?.includes(role));
 
   return (
@@ -32,7 +32,7 @@ export default function Sidebar({ currentPage, onNav, role, user, collapsed, onT
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onToggle}
-            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.3)', zIndex: 1099 }}
+            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.35)', zIndex: 1099, backdropFilter: 'blur(2px)' }}
           />
         )}
       </AnimatePresence>
@@ -44,28 +44,32 @@ export default function Sidebar({ currentPage, onNav, role, user, collapsed, onT
         style={{
           position: 'fixed', top: 0, left: 0, bottom: 0,
           width: 260, padding: '20px 12px',
-          background: 'white',
-          borderRight: '1px solid #e2e8f0',
+          background: 'var(--card)',
+          borderRight: '1px solid var(--border)',
           display: 'flex', flexDirection: 'column',
           zIndex: 1100,
           overflowY: 'auto',
+          boxShadow: '4px 0 24px rgba(0,0,0,0.04)',
+          transition: 'background 0.3s, border-color 0.3s',
         }}
       >
         {/* Header */}
         <div style={{
           display: 'flex', alignItems: 'center', gap: 10,
-          padding: '4px 8px', marginBottom: 24,
-        }}>
+          padding: '4px 8px', marginBottom: 24, cursor: 'pointer',
+        }}
+          onClick={() => onNav('landing')}
+        >
           <div style={{
             width: 36, height: 36, borderRadius: 10,
-            background: 'linear-gradient(135deg, #2563EB, #14B8A6)',
+            background: 'var(--accent-gradient)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
           }}>🏥</div>
           <span style={{ fontWeight: 800, fontSize: '1.1rem' }}>
-            <span className="gradient-text">Health</span>Queue
+            <span className="hq-gradient-text">Health</span><span style={{ color: 'var(--text)' }}>Queue</span>
           </span>
           {window.innerWidth <= 768 && (
-            <button onClick={onToggle} style={{ marginLeft: 'auto', padding: 4 }}>
+            <button onClick={(e) => { e.stopPropagation(); onToggle(); }} style={{ marginLeft: 'auto', padding: 4 }}>
               <Icon name="close" size={20} />
             </button>
           )}
@@ -75,15 +79,16 @@ export default function Sidebar({ currentPage, onNav, role, user, collapsed, onT
         <div style={{
           display: 'flex', alignItems: 'center', gap: 12,
           padding: '12px', marginBottom: 16,
-          background: '#f8fafc', borderRadius: 12,
+          background: 'var(--border-light)', borderRadius: 'var(--radius-sm)',
+          transition: 'background 0.3s',
         }}>
           <Avatar name={user?.name || 'User'} size={38} />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontWeight: 600, fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <div style={{ fontWeight: 600, fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--text)' }}>
               {user?.name || 'User'}
             </div>
             <div style={{
-              fontSize: '0.75rem', color: '#64748b',
+              fontSize: '0.75rem', color: 'var(--text-secondary)',
               textTransform: 'capitalize',
             }}>{role}</div>
           </div>
@@ -93,7 +98,7 @@ export default function Sidebar({ currentPage, onNav, role, user, collapsed, onT
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
           {filteredItems.map((item, i) => {
             if (item.type === 'divider') {
-              return <div key={i} style={{ height: 1, background: '#e2e8f0', margin: '8px 8px' }} />;
+              return <div key={i} style={{ height: 1, background: 'var(--border)', margin: '8px 8px' }} />;
             }
             const isActive = currentPage === item.page;
             return (
@@ -105,14 +110,14 @@ export default function Sidebar({ currentPage, onNav, role, user, collapsed, onT
                 }}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 10,
-                  padding: '10px 12px', borderRadius: 10,
+                  padding: '10px 12px', borderRadius: 'var(--radius-sm)',
                   fontSize: '0.9rem', fontWeight: isActive ? 600 : 500,
-                  color: isActive ? '#2563EB' : '#475569',
-                  background: isActive ? '#eff6ff' : 'transparent',
-                  transition: 'all 0.2s', textAlign: 'left', width: '100%',
+                  color: isActive ? 'var(--primary)' : 'var(--text-secondary)',
+                  background: isActive ? 'rgba(0, 169, 242, 0.1)' : 'transparent',
+                  transition: 'var(--transition)', textAlign: 'left', width: '100%',
                 }}
               >
-                <Icon name={item.icon} size={18} color={isActive ? '#2563EB' : '#94a3b8'} />
+                <Icon name={item.icon} size={18} color={isActive ? 'var(--primary)' : 'var(--text-light)'} />
                 {item.label}
               </button>
             );
@@ -125,28 +130,30 @@ export default function Sidebar({ currentPage, onNav, role, user, collapsed, onT
               onClick={onSwitchRole}
               style={{
                 display: 'flex', alignItems: 'center', gap: 10,
-                padding: '10px 12px', borderRadius: 10,
+                padding: '10px 12px', borderRadius: 'var(--radius-sm)',
                 fontSize: '0.9rem', fontWeight: 500,
-                color: '#64748b', marginTop: 8, width: '100%', textAlign: 'left',
-                border: '1px solid #e2e8f0', background: '#f8fafc', cursor: 'pointer'
+                color: 'var(--text-secondary)', marginTop: 8, width: '100%', textAlign: 'left',
+                border: '1px solid var(--border)', background: 'var(--border-light)', cursor: 'pointer',
+                transition: 'var(--transition)',
               }}
             >
-              <Icon name="user" size={18} color="#64748b" />
+              <Icon name="user" size={18} color="var(--text-secondary)" />
               Switch Role
             </button>
           )}
 
           <button
-            onClick={() => onNav('landing')}
+            onClick={() => onLogout?.()}
             style={{
               display: 'flex', alignItems: 'center', gap: 10,
-              padding: '10px 12px', borderRadius: 10,
+              padding: '10px 12px', borderRadius: 'var(--radius-sm)',
               fontSize: '0.9rem', fontWeight: 500,
-              color: '#ef4444', marginTop: 8, width: '100%', textAlign: 'left',
-              border: 'none', background: 'transparent', cursor: 'pointer'
+              color: 'var(--error)', marginTop: 8, width: '100%', textAlign: 'left',
+              border: 'none', background: 'transparent', cursor: 'pointer',
+              transition: 'var(--transition)',
             }}
           >
-            <Icon name="logout" size={18} color="#ef4444" />
+            <Icon name="logout" size={18} color="var(--error)" />
             Sign Out
           </button>
         </div>

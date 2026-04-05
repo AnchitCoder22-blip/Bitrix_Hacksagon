@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import useWaitTimePredictor from '../hooks/useWaitTimePredictor';
 
@@ -12,6 +13,7 @@ import useWaitTimePredictor from '../hooks/useWaitTimePredictor';
  *   completedPatients  - Array of { startTime, endTime } consultation records
  */
 export default function WaitTimeCard({ queue = [], completedPatients = [] }) {
+  const [smsEnabled, setSmsEnabled] = useState(false);
   const { estimatedWaitTime, avgConsultTime, patientsAhead } = useWaitTimePredictor(
     queue,
     completedPatients
@@ -50,7 +52,7 @@ export default function WaitTimeCard({ queue = [], completedPatients = [] }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
       style={{
-        background: 'white',
+        background: 'var(--card)',
         borderRadius: 20,
         padding: 24,
         boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
@@ -77,7 +79,7 @@ export default function WaitTimeCard({ queue = [], completedPatients = [] }) {
           🤖
         </div>
         <div>
-          <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#1e293b' }}>
+          <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text)' }}>
             AI Wait Predictor
           </div>
           <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
@@ -138,6 +140,59 @@ export default function WaitTimeCard({ queue = [], completedPatients = [] }) {
             </div>
           </motion.div>
         ))}
+      </div>
+
+      {/* SMS Phone Notification Toggle */}
+      <div
+        style={{
+          marginTop: 18,
+          padding: '12px 14px',
+          borderRadius: 12,
+          background: 'var(--border-light)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ padding: 8, background: 'var(--card)', borderRadius: 8, color: 'var(--info)' }}>
+            📱
+          </div>
+          <div>
+            <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)' }}>Phone Notification</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Get an SMS when your turn is coming</div>
+          </div>
+        </div>
+        <button
+          onClick={() => {
+            setSmsEnabled(!smsEnabled);
+            if (!smsEnabled) {
+              alert('Phone notifications activated! We will SMS you when you are next in line.');
+            }
+          }}
+          style={{
+            width: 44,
+            height: 24,
+            borderRadius: 12,
+            background: smsEnabled ? 'var(--success)' : '#cbd5e1',
+            position: 'relative',
+            cursor: 'pointer',
+            transition: 'background 0.3s'
+          }}
+        >
+          <motion.div
+            animate={{ x: smsEnabled ? 20 : 2 }}
+            style={{
+              width: 20,
+              height: 20,
+              background: 'white',
+              borderRadius: '50%',
+              position: 'absolute',
+              top: 2,
+              boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+            }}
+          />
+        </button>
       </div>
 
       {/* Footer note */}
